@@ -1,4 +1,4 @@
-{ name = "my-project"
+{ name = "hibi"
 , dependencies =
   [ "aff-promise"
   , "argonaut-generic"

@@ -5,6 +5,8 @@ module App
 import Hibi.Prelude
 
 import App.Types (Action(..), DSL, HTML, Message, Query, State, initialState)
+import Data.Int as Int
+import Data.JSDate as JSDate
 import Halogen as H
 import Halogen.HTML as HH
 
@@ -27,4 +29,14 @@ app = H.mkComponent
 handleAction :: Action -> DSL Unit
 handleAction = case _ of
   Init -> do
-    pure unit
+    d <- liftEffect JSDate.now
+    year <- liftEffect $ JSDate.getFullYear d
+    month <- liftEffect $ JSDate.getMonth d
+    day <- liftEffect $ JSDate.getDate d
+    H.modify_ $ _
+      { now =
+          { year: Int.ceil year
+          , month: Int.ceil month + 1
+          , day: Int.ceil day
+          }
+      }
